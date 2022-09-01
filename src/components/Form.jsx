@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { AlertError } from "./AlertError";
 
-export const Form = () => {
+export const Form = ({ tareas, setTareas }) => {
 
   const [titulo, setTitulo] = useState('')
   const [fecha, setFecha] = useState('')
@@ -8,6 +9,7 @@ export const Form = () => {
 
   const [error, setError] = useState(false)
 
+  //Validación Formulario  
   const handleSubmit = (e) => {
     e.preventDefault()
     
@@ -15,7 +17,23 @@ export const Form = () => {
         setError(true)    
         return
     }
-    setError(false)
+
+    setError(false)    
+
+    //Objeto de Tareas
+
+    const objetoTareas = {
+        titulo,
+        fecha,
+        descripcion
+    }
+
+    setTareas([...tareas,objetoTareas])
+
+    setTitulo('')
+    setFecha('')
+    setDescripcion('')
+
   }
 
   return (
@@ -28,7 +46,7 @@ export const Form = () => {
         onSubmit={handleSubmit} 
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
 
-        {error && (<div className="bg-red-600 font-bold uppercase text-center text-white p-3 mb-4 rounded-md"><p>Faltan campos por diligenciar 😞</p></div>)}
+        {error && <AlertError/>}
 
         <div className="mb-5">
           <label htmlFor="titulo" className="block text-gray-700 uppercase font-bold">

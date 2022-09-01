@@ -11,7 +11,10 @@ export const App = () => {
     <div className="container mx-auto mt-20"> 
         <Header />
         <div className="mt-12 md:flex">
-        <Form />
+        <Form 
+          tareas={tareas}
+          setTareas={setTareas}
+        />
         <ListaTareas />     
         </div>   
     </div>
