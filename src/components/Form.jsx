@@ -2,9 +2,9 @@ import { useState } from "react";
 
 export const Form = () => {
 
-  const [titulo, settitulo] = useState('')
-  const [fecha, setfecha] = useState('')
-  const [descripcion, setdescripcion] = useState('')
+  const [titulo, setTitulo] = useState('')
+  const [fecha, setFecha] = useState('')
+  const [descripcion, setDescripcion] = useState('')
 
   const [error, setError] = useState(false)
 
@@ -67,7 +67,7 @@ export const Form = () => {
             placeholder="Descripción de la tarea"
             className="border-2 w-full p-2 mt-2 rounded-md"
             value={descripcion}
-            onChange={ (e) => setdescripcion(e.target.value) }
+            onChange={ (e) => setDescripcion(e.target.value) }
           />          
         </div>
         <input type="submit" value="Crear Tarea"
