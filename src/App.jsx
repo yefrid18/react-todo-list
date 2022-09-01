@@ -4,7 +4,7 @@ import { ListaTareas } from "./components/ListaTareas"
 export const App = () => {
  
   return (
-    <div className=""> 
+    <div className="container mx-auto"> 
         <Header />
         <Form />
         <ListaTareas />        
