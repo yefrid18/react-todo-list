@@ -1,9 +1,13 @@
-
+import { Form } from "./components/Form"
+import { Header } from "./components/Header"
+import { ListaTareas } from "./components/ListaTareas"
 export const App = () => {
  
   return (
-    <div> 
-        <h1 className="bg-blue-300">Formulario Todo</h1>       
+    <div className=""> 
+        <Header />
+        <Form />
+        <ListaTareas />        
     </div>
   )
 }
