@@ -15,7 +15,10 @@ export const App = () => {
           tareas={tareas}
           setTareas={setTareas}
         />
-        <ListaTareas />     
+        <ListaTareas 
+          tareas={tareas}
+        
+        />     
         </div>   
     </div>
   )
