@@ -9,6 +9,13 @@ export const Form = ({ tareas, setTareas }) => {
 
   const [error, setError] = useState(false)
 
+  //Generar ID
+  const generarId = () => {
+    const id = Math.random().toString(20).substr(2)
+
+    return id
+  }
+
   //Validación Formulario  
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -25,7 +32,8 @@ export const Form = ({ tareas, setTareas }) => {
     const objetoTareas = {
         titulo,
         fecha,
-        descripcion
+        descripcion,
+        id : generarId()
     }
 
     setTareas([...tareas,objetoTareas])
