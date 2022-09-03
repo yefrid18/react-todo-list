@@ -44,13 +44,14 @@ export const Form = ({ tareas, setTareas, tarea, setTarea }) => {
 
     if (tarea.id) {
       //Editar tarea
+      objetoTareas.id = tarea.id;
+
       const tareasActualizadas = tareas.map((tareaState) =>
         tareaState.id === tarea.id ? objetoTareas : tareaState
       );
 
       setTareas(tareasActualizadas);
       setTarea({});
-      
     } else {
       //Nueva tarea
       (objetoTareas.id = generarId()), setTareas([...tareas, objetoTareas]);
