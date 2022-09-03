@@ -1,6 +1,7 @@
+
 import { Tareas } from "./Tareas"
 
-export const ListaTareas = ({tareas}) => {
+export const ListaTareas = ({tareas, setTarea}) => {
 
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-5 mb-10 md:h-screen overflow-scroll">
@@ -16,7 +17,8 @@ export const ListaTareas = ({tareas}) => {
         return(
             <Tareas  
                 key={tarea.id}               
-                tarea={tarea}            
+                tarea={tarea}  
+                setTarea ={setTarea}          
             />  
         )
       })}

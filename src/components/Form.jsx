@@ -1,48 +1,66 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AlertError } from "./AlertError";
 
-export const Form = ({ tareas, setTareas }) => {
+export const Form = ({ tareas, setTareas, tarea, setTarea }) => {
+  const [titulo, setTitulo] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [descripcion, setDescripcion] = useState("");
 
-  const [titulo, setTitulo] = useState('')
-  const [fecha, setFecha] = useState('')
-  const [descripcion, setDescripcion] = useState('')
+  const [error, setError] = useState(false);
 
-  const [error, setError] = useState(false)
+  useEffect(() => {
+    if (Object.keys(tarea).length > 0) {
+      setTitulo(tarea.titulo);
+      setFecha(tarea.fecha);
+      setDescripcion(tarea.descripcion);
+    }
+  }, [tarea]);
 
   //Generar ID
   const generarId = () => {
-    const id = Math.random().toString(20).substr(2)
+    const id = Math.random().toString(20).substr(2);
 
-    return id
-  }
+    return id;
+  };
 
-  //Validación Formulario  
+  //Validación Formulario
   const handleSubmit = (e) => {
-    e.preventDefault()
-    
-    if([titulo,fecha,descripcion].includes('')){
-        setError(true)    
-        return
+    e.preventDefault();
+
+    if ([titulo, fecha, descripcion].includes("")) {
+      setError(true);
+      return;
     }
 
-    setError(false)    
+    setError(false);
 
     //Objeto de Tareas
 
     const objetoTareas = {
-        titulo,
-        fecha,
-        descripcion,
-        id : generarId()
+      titulo,
+      fecha,
+      descripcion,
+    };
+
+    if (tarea.id) {
+      //Editar tarea
+      const tareasActualizadas = tareas.map((tareaState) =>
+        tareaState.id === tarea.id ? objetoTareas : tareaState
+      );
+
+      setTareas(tareasActualizadas);
+      setTarea({});
+      
+    } else {
+      //Nueva tarea
+      (objetoTareas.id = generarId()), setTareas([...tareas, objetoTareas]);
     }
 
-    setTareas([...tareas,objetoTareas])
-
-    setTitulo('')
-    setFecha('')
-    setDescripcion('')
-
-  }
+    //Limpiar nuestro formulario
+    setTitulo("");
+    setFecha("");
+    setDescripcion("");
+  };
 
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-5">
@@ -50,14 +68,17 @@ export const Form = ({ tareas, setTareas }) => {
         Creación de Tareas
       </h2>
 
-      <form 
-        onSubmit={handleSubmit} 
-        className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
-
-        {error && <AlertError mensaje= "Faltan campos por diligenciar 😞" />}
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
+      >
+        {error && <AlertError mensaje="Faltan campos por diligenciar 😞" />}
 
         <div className="mb-5">
-          <label htmlFor="titulo" className="block text-gray-700 uppercase font-bold">
+          <label
+            htmlFor="titulo"
+            className="block text-gray-700 uppercase font-bold"
+          >
             Titulo
           </label>
           <input
@@ -66,25 +87,31 @@ export const Form = ({ tareas, setTareas }) => {
             placeholder="Titulo de la tarea"
             className="border-2 w-full p-2 mt-2 rounded-md"
             value={titulo}
-            onChange={ (e) => setTitulo(e.target.value) }
-          />          
+            onChange={(e) => setTitulo(e.target.value)}
+          />
         </div>
 
         <div className="mb-5">
-          <label htmlFor="fecha" className="block text-gray-700 uppercase font-bold">
+          <label
+            htmlFor="fecha"
+            className="block text-gray-700 uppercase font-bold"
+          >
             Fecha
           </label>
           <input
             id="fecha"
-            type="date"            
+            type="date"
             className="border-2 w-full p-2 mt-2 rounded-md"
             value={fecha}
-            onChange={ (e) => setFecha(e.target.value) }
-          />          
+            onChange={(e) => setFecha(e.target.value)}
+          />
         </div>
 
         <div className="mb-5">
-          <label htmlFor="descripcion" className="block text-gray-700 uppercase font-bold">
+          <label
+            htmlFor="descripcion"
+            className="block text-gray-700 uppercase font-bold"
+          >
             Descripción
           </label>
           <textarea
@@ -93,12 +120,22 @@ export const Form = ({ tareas, setTareas }) => {
             placeholder="Descripción de la tarea"
             className="border-2 w-full p-2 mt-2 rounded-md"
             value={descripcion}
-            onChange={ (e) => setDescripcion(e.target.value) }
-          />          
+            onChange={(e) => setDescripcion(e.target.value)}
+          />
         </div>
-        <input type="submit" value="Crear Tarea"
-        className="bg-blue-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-blue-700 transition-colors cursor-pointer" 
-        />        
+        {!tarea.id ? (
+          <input
+            type="submit"
+            value="Crear Tarea"
+            className="bg-blue-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
+          />
+        ) : (
+          <input
+            type="submit"
+            value="Actualizar Tarea"
+            className="bg-purple-600 w-full p-3 text-white uppercase font-bold rounded-md hover:bg-purple-700 transition-colors cursor-pointer"
+          />
+        )}
       </form>
     </div>
   );
